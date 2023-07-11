@@ -1,0 +1,1741 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="base_url" elementType="Argument">
+            <stringProp name="Argument.name">base_url</stringProp>
+            <stringProp name="Argument.value">petstore.swagger.io</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group- 50 Users">
+        <stringProp name="ThreadGroup.num_threads">50</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">${__P(duration,3600)}</stringProp>
+        <stringProp name="ThreadGroup.delay">5</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController">
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager">
+          <collectionProp name="CookieManager.cookies"/>
+          <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+          <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+        </CookieManager>
+        <hashTree/>
+        <CacheManager guiclass="CacheManagerGui" testclass="CacheManager" testname="HTTP Cache Manager">
+          <boolProp name="clearEachIteration">false</boolProp>
+          <boolProp name="useExpires">true</boolProp>
+          <boolProp name="CacheManager.controlledByThread">false</boolProp>
+        </CacheManager>
+        <hashTree/>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="accept" elementType="Header">
+              <stringProp name="Header.name">accept</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="Content-Type" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="Cookie" elementType="Header">
+              <stringProp name="Header.name">Cookie</stringProp>
+              <stringProp name="Header.value">Token=${jsonSessionId}</stringProp>
+            </elementProp>
+          </collectionProp>
+          <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T16:42:59.021</stringProp>
+        </HeaderManager>
+        <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config">
+          <stringProp name="delimiter">,</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="filename">C:/Program Files/apache-jmeter-5.6/bin/create.csv</stringProp>
+          <boolProp name="ignoreFirstLine">false</boolProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames"></stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get User  Login">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user/login?username=test&amp;password=abc123</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T16:39:43.541</stringProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Authorize user">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">{&#xd;
+	&quot;username&quot;:&quot;test&quot;,&#xd;
+	&quot;password&quot;:&quot;abc123&quot;&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/oauth/authorize</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
+          <stringProp name="JSONPostProcessor.referenceNames">jsonSessionId</stringProp>
+          <stringProp name="JSONPostProcessor.jsonPathExprs">$.JSESSIONID</stringProp>
+          <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          <stringProp name="Sample.scope">all</stringProp>
+        </JSONPostProcessor>
+        <hashTree/>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller">
+          <boolProp name="IfController.useExpression">true</boolProp>
+          <stringProp name="IfController.condition">${__jexl3(&quot;${username}&quot; != &quot;${username}&quot;)}</stringProp>
+        </IfController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create User List ">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <stringProp name="Argument.value">[&#xd;
+	{&#xd;
+	&quot;id&quot;:&quot;${id}&quot;,&#xd;
+	&quot;username&quot;:&quot;${username}&quot;,&#xd;
+	&quot;firstname&quot;:&quot;${firstname}&quot;,&#xd;
+	&quot;lastname&quot;:&quot;${lastname}&quot;,&#xd;
+	&quot;email&quot;: &quot;${email}&quot;,&#xd;
+	&quot;password&quot;:&quot;${password}&quot;,&#xd;
+	&quot;phone&quot;:&quot;${phone}&quot;,&#xd;
+	&quot;userStatus&quot;:&quot;${userStatus}&quot;&#xd;
+	}&#xd;
+]</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/v2/user/createWithList</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T12:00:52.097</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="accept" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T12:00:52.097</stringProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create User">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">[&#xd;
+	{&#xd;
+	&quot;id&quot;:&quot;${id}&quot;,&#xd;
+	&quot;username&quot;:&quot;${username}&quot;,&#xd;
+	&quot;firstname&quot;:&quot;${firstname}&quot;,&#xd;
+	&quot;lastname&quot;:&quot;${lastname}&quot;,&#xd;
+	&quot;email&quot;: &quot;${email}&quot;,&#xd;
+	&quot;password&quot;:&quot;${password}&quot;,&#xd;
+	&quot;phone&quot;:&quot;${phone}&quot;,&#xd;
+	&quot;userStatus&quot;:&quot;${userStatus}&quot;&#xd;
+	}&#xd;
+]</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user/createWithArray</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">token=${jsonSessionId}</stringProp>
+              </elementProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T11:38:00.372</stringProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">log.info(get(&quot;jsonSessionId&quot;))</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Update User">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">{&#xd;
+  &quot;id&quot;: 1,&#xd;
+  &quot;username&quot;: &quot;${username}&quot;,&#xd;
+  &quot;firstName&quot;: &quot;Aley&quot;,&#xd;
+  &quot;lastName&quot;: &quot;Imam&quot;,&#xd;
+  &quot;email&quot;: &quot;${email}&quot;,&#xd;
+  &quot;password&quot;: &quot;${password}&quot;,&#xd;
+  &quot;phone&quot;: &quot;${phone}&quot;,&#xd;
+  &quot;userStatus&quot;: 0&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user/alif</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T15:23:48.507</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Cookie" elementType="Header">
+                <stringProp name="Header.name">Cookie</stringProp>
+                <stringProp name="Header.value">Token=${jsonSessionId}</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Create User - Dummy Sampler">
+          <boolProp name="WAITING">true</boolProp>
+          <boolProp name="SUCCESFULL">true</boolProp>
+          <stringProp name="RESPONSE_CODE">200</stringProp>
+          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+          <stringProp name="REQUEST_DATA">{
+	&quot;id&quot;:${id},
+	&quot;username&quot;:${username},
+	&quot;firstname&quot;:${firstname},
+	&quot;lastname&quot;:${lastname},
+	&quot;email&quot;: ${email},
+	&quot;password&quot;:${password},
+	&quot;phone&quot;:${phone},
+	&quot;userStatus&quot;:${userStatus}
+}
+</stringProp>
+          <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+          <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
+          <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
+          <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
+          <stringProp name="URL"></stringProp>
+          <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+        </kg.apc.jmeter.samplers.DummySampler>
+        <hashTree/>
+        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Create User - Dummy Sampler">
+          <boolProp name="WAITING">true</boolProp>
+          <boolProp name="SUCCESFULL">true</boolProp>
+          <stringProp name="RESPONSE_CODE">200</stringProp>
+          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+          <stringProp name="REQUEST_DATA">{
+	&quot;id&quot;:${id},
+	&quot;username&quot;:${username},
+	&quot;firstname&quot;:${firstname},
+	&quot;lastname&quot;:${lastname},
+	&quot;email&quot;: ${email},
+	&quot;password&quot;:${password},
+	&quot;phone&quot;:${phone},
+	&quot;userStatus&quot;:${userStatus}
+}
+</stringProp>
+          <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+          <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
+          <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
+          <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
+          <stringProp name="URL"></stringProp>
+          <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+        </kg.apc.jmeter.samplers.DummySampler>
+        <hashTree/>
+        <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While Controller">
+          <stringProp name="WhileController.condition">${__jexl3(&quot;${username}&quot; !== &quot;faiz92&quot;)}
+</stringProp>
+        </WhileController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Delete User">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/v2/user/${username}</stringProp>
+            <stringProp name="HTTPSampler.method">DELETE</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create User Again">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">{&#xd;
+  &quot;id&quot;: 0,&#xd;
+  &quot;username&quot;: &quot;string&quot;,&#xd;
+  &quot;firstName&quot;: &quot;string&quot;,&#xd;
+  &quot;lastName&quot;: &quot;string&quot;,&#xd;
+  &quot;email&quot;: &quot;string&quot;,&#xd;
+  &quot;password&quot;: &quot;string&quot;,&#xd;
+  &quot;phone&quot;: &quot;string&quot;,&#xd;
+  &quot;userStatus&quot;: 0&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T17:03:25.326</stringProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group-100 Users" enabled="false">
+        <stringProp name="ThreadGroup.num_threads">100</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">${__P(duration,3600)}</stringProp>
+        <stringProp name="ThreadGroup.delay">5</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController">
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager">
+          <collectionProp name="CookieManager.cookies"/>
+          <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+          <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+        </CookieManager>
+        <hashTree/>
+        <CacheManager guiclass="CacheManagerGui" testclass="CacheManager" testname="HTTP Cache Manager">
+          <boolProp name="clearEachIteration">false</boolProp>
+          <boolProp name="useExpires">true</boolProp>
+          <boolProp name="CacheManager.controlledByThread">false</boolProp>
+        </CacheManager>
+        <hashTree/>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="accept" elementType="Header">
+              <stringProp name="Header.name">accept</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="Content-Type" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="Cookie" elementType="Header">
+              <stringProp name="Header.name">Cookie</stringProp>
+              <stringProp name="Header.value">Token=${jsonSessionId}</stringProp>
+            </elementProp>
+          </collectionProp>
+          <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T16:42:59.021</stringProp>
+        </HeaderManager>
+        <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config">
+          <stringProp name="delimiter">,</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="filename">C:/Program Files/apache-jmeter-5.6/bin/create.csv</stringProp>
+          <boolProp name="ignoreFirstLine">false</boolProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames"></stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get User  Login">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user/login?username=test&amp;password=abc123</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T16:39:43.541</stringProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Authorize user">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">{&#xd;
+	&quot;username&quot;:&quot;test&quot;,&#xd;
+	&quot;password&quot;:&quot;abc123&quot;&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/oauth/authorize</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
+          <stringProp name="JSONPostProcessor.referenceNames">jsonSessionId</stringProp>
+          <stringProp name="JSONPostProcessor.jsonPathExprs">$.JSESSIONID</stringProp>
+          <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          <stringProp name="Sample.scope">all</stringProp>
+        </JSONPostProcessor>
+        <hashTree/>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller">
+          <boolProp name="IfController.useExpression">true</boolProp>
+          <stringProp name="IfController.condition">${__jexl3(&quot;${username}&quot; != &quot;${username}&quot;)}</stringProp>
+        </IfController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create User List ">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <stringProp name="Argument.value">[&#xd;
+	{&#xd;
+	&quot;id&quot;:&quot;${id}&quot;,&#xd;
+	&quot;username&quot;:&quot;${username}&quot;,&#xd;
+	&quot;firstname&quot;:&quot;${firstname}&quot;,&#xd;
+	&quot;lastname&quot;:&quot;${lastname}&quot;,&#xd;
+	&quot;email&quot;: &quot;${email}&quot;,&#xd;
+	&quot;password&quot;:&quot;${password}&quot;,&#xd;
+	&quot;phone&quot;:&quot;${phone}&quot;,&#xd;
+	&quot;userStatus&quot;:&quot;${userStatus}&quot;&#xd;
+	}&#xd;
+]</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/v2/user/createWithList</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T12:00:52.097</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="accept" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T12:00:52.097</stringProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create User">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">[&#xd;
+	{&#xd;
+	&quot;id&quot;:&quot;${id}&quot;,&#xd;
+	&quot;username&quot;:&quot;${username}&quot;,&#xd;
+	&quot;firstname&quot;:&quot;${firstname}&quot;,&#xd;
+	&quot;lastname&quot;:&quot;${lastname}&quot;,&#xd;
+	&quot;email&quot;: &quot;${email}&quot;,&#xd;
+	&quot;password&quot;:&quot;${password}&quot;,&#xd;
+	&quot;phone&quot;:&quot;${phone}&quot;,&#xd;
+	&quot;userStatus&quot;:&quot;${userStatus}&quot;&#xd;
+	}&#xd;
+]</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user/createWithArray</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">token=${jsonSessionId}</stringProp>
+              </elementProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T11:38:00.372</stringProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">log.info(get(&quot;jsonSessionId&quot;))</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Update User">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">{&#xd;
+  &quot;id&quot;: 1,&#xd;
+  &quot;username&quot;: &quot;${username}&quot;,&#xd;
+  &quot;firstName&quot;: &quot;Aley&quot;,&#xd;
+  &quot;lastName&quot;: &quot;Imam&quot;,&#xd;
+  &quot;email&quot;: &quot;${email}&quot;,&#xd;
+  &quot;password&quot;: &quot;${password}&quot;,&#xd;
+  &quot;phone&quot;: &quot;${phone}&quot;,&#xd;
+  &quot;userStatus&quot;: 0&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user/alif</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T15:23:48.507</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Cookie" elementType="Header">
+                <stringProp name="Header.name">Cookie</stringProp>
+                <stringProp name="Header.value">Token=${jsonSessionId}</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Create User - Dummy Sampler">
+          <boolProp name="WAITING">true</boolProp>
+          <boolProp name="SUCCESFULL">true</boolProp>
+          <stringProp name="RESPONSE_CODE">200</stringProp>
+          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+          <stringProp name="REQUEST_DATA">{
+	&quot;id&quot;:${id},
+	&quot;username&quot;:${username},
+	&quot;firstname&quot;:${firstname},
+	&quot;lastname&quot;:${lastname},
+	&quot;email&quot;: ${email},
+	&quot;password&quot;:${password},
+	&quot;phone&quot;:${phone},
+	&quot;userStatus&quot;:${userStatus}
+}
+</stringProp>
+          <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+          <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
+          <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
+          <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
+          <stringProp name="URL"></stringProp>
+          <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+        </kg.apc.jmeter.samplers.DummySampler>
+        <hashTree/>
+        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Create User - Dummy Sampler">
+          <boolProp name="WAITING">true</boolProp>
+          <boolProp name="SUCCESFULL">true</boolProp>
+          <stringProp name="RESPONSE_CODE">200</stringProp>
+          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+          <stringProp name="REQUEST_DATA">{
+	&quot;id&quot;:${id},
+	&quot;username&quot;:${username},
+	&quot;firstname&quot;:${firstname},
+	&quot;lastname&quot;:${lastname},
+	&quot;email&quot;: ${email},
+	&quot;password&quot;:${password},
+	&quot;phone&quot;:${phone},
+	&quot;userStatus&quot;:${userStatus}
+}
+</stringProp>
+          <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+          <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
+          <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
+          <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
+          <stringProp name="URL"></stringProp>
+          <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+        </kg.apc.jmeter.samplers.DummySampler>
+        <hashTree/>
+        <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While Controller">
+          <stringProp name="WhileController.condition">${__jexl3(&quot;${username}&quot; !=
+= &quot;faiz92&quot;)}
+</stringProp>
+        </WhileController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Delete User">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/v2/user/${username}</stringProp>
+            <stringProp name="HTTPSampler.method">DELETE</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create User Again">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">{&#xd;
+  &quot;id&quot;: 0,&#xd;
+  &quot;username&quot;: &quot;string&quot;,&#xd;
+  &quot;firstName&quot;: &quot;string&quot;,&#xd;
+  &quot;lastName&quot;: &quot;string&quot;,&#xd;
+  &quot;email&quot;: &quot;string&quot;,&#xd;
+  &quot;password&quot;: &quot;string&quot;,&#xd;
+  &quot;phone&quot;: &quot;string&quot;,&#xd;
+  &quot;userStatus&quot;: 0&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T17:03:25.326</stringProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group-150 Users" enabled="false">
+        <stringProp name="ThreadGroup.num_threads">150</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">${__P(duration,3600)}</stringProp>
+        <stringProp name="ThreadGroup.delay">5</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController">
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager">
+          <collectionProp name="CookieManager.cookies"/>
+          <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+          <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+        </CookieManager>
+        <hashTree/>
+        <CacheManager guiclass="CacheManagerGui" testclass="CacheManager" testname="HTTP Cache Manager">
+          <boolProp name="clearEachIteration">false</boolProp>
+          <boolProp name="useExpires">true</boolProp>
+          <boolProp name="CacheManager.controlledByThread">false</boolProp>
+        </CacheManager>
+        <hashTree/>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="accept" elementType="Header">
+              <stringProp name="Header.name">accept</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="Content-Type" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="Cookie" elementType="Header">
+              <stringProp name="Header.name">Cookie</stringProp>
+              <stringProp name="Header.value">Token=${jsonSessionId}</stringProp>
+            </elementProp>
+          </collectionProp>
+          <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T16:42:59.021</stringProp>
+        </HeaderManager>
+        <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config">
+          <stringProp name="delimiter">,</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="filename">C:/Program Files/apache-jmeter-5.6/bin/create.csv</stringProp>
+          <boolProp name="ignoreFirstLine">false</boolProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames"></stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get User  Login">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user/login?username=test&amp;password=abc123</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T16:39:43.541</stringProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Authorize user">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">{&#xd;
+	&quot;username&quot;:&quot;test&quot;,&#xd;
+	&quot;password&quot;:&quot;abc123&quot;&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/oauth/authorize</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
+          <stringProp name="JSONPostProcessor.referenceNames">jsonSessionId</stringProp>
+          <stringProp name="JSONPostProcessor.jsonPathExprs">$.JSESSIONID</stringProp>
+          <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          <stringProp name="Sample.scope">all</stringProp>
+        </JSONPostProcessor>
+        <hashTree/>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller">
+          <boolProp name="IfController.useExpression">true</boolProp>
+          <stringProp name="IfController.condition">${__jexl3(&quot;${username}&quot; != &quot;${username}&quot;)}</stringProp>
+        </IfController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create User List ">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <stringProp name="Argument.value">[&#xd;
+	{&#xd;
+	&quot;id&quot;:&quot;${id}&quot;,&#xd;
+	&quot;username&quot;:&quot;${username}&quot;,&#xd;
+	&quot;firstname&quot;:&quot;${firstname}&quot;,&#xd;
+	&quot;lastname&quot;:&quot;${lastname}&quot;,&#xd;
+	&quot;email&quot;: &quot;${email}&quot;,&#xd;
+	&quot;password&quot;:&quot;${password}&quot;,&#xd;
+	&quot;phone&quot;:&quot;${phone}&quot;,&#xd;
+	&quot;userStatus&quot;:&quot;${userStatus}&quot;&#xd;
+	}&#xd;
+]</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/v2/user/createWithList</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T12:00:52.097</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="accept" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T12:00:52.097</stringProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create User">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">[&#xd;
+	{&#xd;
+	&quot;id&quot;:&quot;${id}&quot;,&#xd;
+	&quot;username&quot;:&quot;${username}&quot;,&#xd;
+	&quot;firstname&quot;:&quot;${firstname}&quot;,&#xd;
+	&quot;lastname&quot;:&quot;${lastname}&quot;,&#xd;
+	&quot;email&quot;: &quot;${email}&quot;,&#xd;
+	&quot;password&quot;:&quot;${password}&quot;,&#xd;
+	&quot;phone&quot;:&quot;${phone}&quot;,&#xd;
+	&quot;userStatus&quot;:&quot;${userStatus}&quot;&#xd;
+	}&#xd;
+]</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user/createWithArray</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">token=${jsonSessionId}</stringProp>
+              </elementProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T11:38:00.372</stringProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">log.info(get(&quot;jsonSessionId&quot;))</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Update User">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">{&#xd;
+  &quot;id&quot;: 1,&#xd;
+  &quot;username&quot;: &quot;${username}&quot;,&#xd;
+  &quot;firstName&quot;: &quot;Aley&quot;,&#xd;
+  &quot;lastName&quot;: &quot;Imam&quot;,&#xd;
+  &quot;email&quot;: &quot;${email}&quot;,&#xd;
+  &quot;password&quot;: &quot;${password}&quot;,&#xd;
+  &quot;phone&quot;: &quot;${phone}&quot;,&#xd;
+  &quot;userStatus&quot;: 0&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user/alif</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T15:23:48.507</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Cookie" elementType="Header">
+                <stringProp name="Header.name">Cookie</stringProp>
+                <stringProp name="Header.value">Token=${jsonSessionId}</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Create User - Dummy Sampler">
+          <boolProp name="WAITING">true</boolProp>
+          <boolProp name="SUCCESFULL">true</boolProp>
+          <stringProp name="RESPONSE_CODE">200</stringProp>
+          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+          <stringProp name="REQUEST_DATA">{
+	&quot;id&quot;:${id},
+	&quot;username&quot;:${username},
+	&quot;firstname&quot;:${firstname},
+	&quot;lastname&quot;:${lastname},
+	&quot;email&quot;: ${email},
+	&quot;password&quot;:${password},
+	&quot;phone&quot;:${phone},
+	&quot;userStatus&quot;:${userStatus}
+}
+</stringProp>
+          <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+          <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
+          <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
+          <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
+          <stringProp name="URL"></stringProp>
+          <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+        </kg.apc.jmeter.samplers.DummySampler>
+        <hashTree/>
+        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Create User - Dummy Sampler">
+          <boolProp name="WAITING">true</boolProp>
+          <boolProp name="SUCCESFULL">true</boolProp>
+          <stringProp name="RESPONSE_CODE">200</stringProp>
+          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+          <stringProp name="REQUEST_DATA">{
+	&quot;id&quot;:${id},
+	&quot;username&quot;:${username},
+	&quot;firstname&quot;:${firstname},
+	&quot;lastname&quot;:${lastname},
+	&quot;email&quot;: ${email},
+	&quot;password&quot;:${password},
+	&quot;phone&quot;:${phone},
+	&quot;userStatus&quot;:${userStatus}
+}
+</stringProp>
+          <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+          <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
+          <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
+          <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
+          <stringProp name="URL"></stringProp>
+          <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+        </kg.apc.jmeter.samplers.DummySampler>
+        <hashTree/>
+        <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While Controller">
+          <stringProp name="WhileController.condition">${__jexl3(&quot;${username}&quot; !=
+= &quot;faiz92&quot;)}
+</stringProp>
+        </WhileController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Delete User">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/v2/user/${username}</stringProp>
+            <stringProp name="HTTPSampler.method">DELETE</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create User Again">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">{&#xd;
+  &quot;id&quot;: 0,&#xd;
+  &quot;username&quot;: &quot;string&quot;,&#xd;
+  &quot;firstName&quot;: &quot;string&quot;,&#xd;
+  &quot;lastName&quot;: &quot;string&quot;,&#xd;
+  &quot;email&quot;: &quot;string&quot;,&#xd;
+  &quot;password&quot;: &quot;string&quot;,&#xd;
+  &quot;phone&quot;: &quot;string&quot;,&#xd;
+  &quot;userStatus&quot;: 0&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T17:03:25.326</stringProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group-200 Users" enabled="false">
+        <stringProp name="ThreadGroup.num_threads">200</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">${__P(duration,3600)}</stringProp>
+        <stringProp name="ThreadGroup.delay">5</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController">
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager">
+          <collectionProp name="CookieManager.cookies"/>
+          <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+          <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+        </CookieManager>
+        <hashTree/>
+        <CacheManager guiclass="CacheManagerGui" testclass="CacheManager" testname="HTTP Cache Manager">
+          <boolProp name="clearEachIteration">false</boolProp>
+          <boolProp name="useExpires">true</boolProp>
+          <boolProp name="CacheManager.controlledByThread">false</boolProp>
+        </CacheManager>
+        <hashTree/>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="accept" elementType="Header">
+              <stringProp name="Header.name">accept</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="Content-Type" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="Cookie" elementType="Header">
+              <stringProp name="Header.name">Cookie</stringProp>
+              <stringProp name="Header.value">Token=${jsonSessionId}</stringProp>
+            </elementProp>
+          </collectionProp>
+          <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T16:42:59.021</stringProp>
+        </HeaderManager>
+        <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config">
+          <stringProp name="delimiter">,</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="filename">C:/Program Files/apache-jmeter-5.6/bin/create.csv</stringProp>
+          <boolProp name="ignoreFirstLine">false</boolProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames"></stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get User  Login">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user/login?username=test&amp;password=abc123</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T16:39:43.541</stringProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Authorize user">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">{&#xd;
+	&quot;username&quot;:&quot;test&quot;,&#xd;
+	&quot;password&quot;:&quot;abc123&quot;&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/oauth/authorize</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
+          <stringProp name="JSONPostProcessor.referenceNames">jsonSessionId</stringProp>
+          <stringProp name="JSONPostProcessor.jsonPathExprs">$.JSESSIONID</stringProp>
+          <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          <stringProp name="Sample.scope">all</stringProp>
+        </JSONPostProcessor>
+        <hashTree/>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller">
+          <boolProp name="IfController.useExpression">true</boolProp>
+          <stringProp name="IfController.condition">${__jexl3(&quot;${username}&quot; != &quot;${username}&quot;)}</stringProp>
+        </IfController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create User List ">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <stringProp name="Argument.value">[&#xd;
+	{&#xd;
+	&quot;id&quot;:&quot;${id}&quot;,&#xd;
+	&quot;username&quot;:&quot;${username}&quot;,&#xd;
+	&quot;firstname&quot;:&quot;${firstname}&quot;,&#xd;
+	&quot;lastname&quot;:&quot;${lastname}&quot;,&#xd;
+	&quot;email&quot;: &quot;${email}&quot;,&#xd;
+	&quot;password&quot;:&quot;${password}&quot;,&#xd;
+	&quot;phone&quot;:&quot;${phone}&quot;,&#xd;
+	&quot;userStatus&quot;:&quot;${userStatus}&quot;&#xd;
+	}&#xd;
+]</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/v2/user/createWithList</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T12:00:52.097</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="accept" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T12:00:52.097</stringProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create User">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">[&#xd;
+	{&#xd;
+	&quot;id&quot;:&quot;${id}&quot;,&#xd;
+	&quot;username&quot;:&quot;${username}&quot;,&#xd;
+	&quot;firstname&quot;:&quot;${firstname}&quot;,&#xd;
+	&quot;lastname&quot;:&quot;${lastname}&quot;,&#xd;
+	&quot;email&quot;: &quot;${email}&quot;,&#xd;
+	&quot;password&quot;:&quot;${password}&quot;,&#xd;
+	&quot;phone&quot;:&quot;${phone}&quot;,&#xd;
+	&quot;userStatus&quot;:&quot;${userStatus}&quot;&#xd;
+	}&#xd;
+]</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user/createWithArray</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">token=${jsonSessionId}</stringProp>
+              </elementProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T11:38:00.372</stringProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">log.info(get(&quot;jsonSessionId&quot;))</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Update User">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">{&#xd;
+  &quot;id&quot;: 1,&#xd;
+  &quot;username&quot;: &quot;${username}&quot;,&#xd;
+  &quot;firstName&quot;: &quot;Aley&quot;,&#xd;
+  &quot;lastName&quot;: &quot;Imam&quot;,&#xd;
+  &quot;email&quot;: &quot;${email}&quot;,&#xd;
+  &quot;password&quot;: &quot;${password}&quot;,&#xd;
+  &quot;phone&quot;: &quot;${phone}&quot;,&#xd;
+  &quot;userStatus&quot;: 0&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user/alif</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T15:23:48.507</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Cookie" elementType="Header">
+                <stringProp name="Header.name">Cookie</stringProp>
+                <stringProp name="Header.value">Token=${jsonSessionId}</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Create User - Dummy Sampler">
+          <boolProp name="WAITING">true</boolProp>
+          <boolProp name="SUCCESFULL">true</boolProp>
+          <stringProp name="RESPONSE_CODE">200</stringProp>
+          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+          <stringProp name="REQUEST_DATA">{
+	&quot;id&quot;:${id},
+	&quot;username&quot;:${username},
+	&quot;firstname&quot;:${firstname},
+	&quot;lastname&quot;:${lastname},
+	&quot;email&quot;: ${email},
+	&quot;password&quot;:${password},
+	&quot;phone&quot;:${phone},
+	&quot;userStatus&quot;:${userStatus}
+}
+</stringProp>
+          <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+          <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
+          <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
+          <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
+          <stringProp name="URL"></stringProp>
+          <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+        </kg.apc.jmeter.samplers.DummySampler>
+        <hashTree/>
+        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Create User - Dummy Sampler">
+          <boolProp name="WAITING">true</boolProp>
+          <boolProp name="SUCCESFULL">true</boolProp>
+          <stringProp name="RESPONSE_CODE">200</stringProp>
+          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+          <stringProp name="REQUEST_DATA">{
+	&quot;id&quot;:${id},
+	&quot;username&quot;:${username},
+	&quot;firstname&quot;:${firstname},
+	&quot;lastname&quot;:${lastname},
+	&quot;email&quot;: ${email},
+	&quot;password&quot;:${password},
+	&quot;phone&quot;:${phone},
+	&quot;userStatus&quot;:${userStatus}
+}
+</stringProp>
+          <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+          <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
+          <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
+          <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
+          <stringProp name="URL"></stringProp>
+          <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+        </kg.apc.jmeter.samplers.DummySampler>
+        <hashTree/>
+        <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While Controller">
+          <stringProp name="WhileController.condition">${__jexl3(&quot;${username}&quot; !=
+= &quot;faiz92&quot;)}
+</stringProp>
+        </WhileController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Delete User">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/v2/user/${username}</stringProp>
+            <stringProp name="HTTPSampler.method">DELETE</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create User Again">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <stringProp name="Argument.value">{&#xd;
+  &quot;id&quot;: 0,&#xd;
+  &quot;username&quot;: &quot;string&quot;,&#xd;
+  &quot;firstName&quot;: &quot;string&quot;,&#xd;
+  &quot;lastName&quot;: &quot;string&quot;,&#xd;
+  &quot;email&quot;: &quot;string&quot;,&#xd;
+  &quot;password&quot;: &quot;string&quot;,&#xd;
+  &quot;phone&quot;: &quot;string&quot;,&#xd;
+  &quot;userStatus&quot;: 0&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">petstore.swagger.io</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v2/user</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2023-07-11T17:03:25.326</stringProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <BackendListener guiclass="BackendListenerGui" testclass="BackendListener" testname="Backend Listener">
+        <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="graphiteMetricsSender" elementType="Argument">
+              <stringProp name="Argument.name">graphiteMetricsSender</stringProp>
+              <stringProp name="Argument.value">org.apache.jmeter.visualizers.backend.graphite.TextGraphiteMetricsSender</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="graphiteHost" elementType="Argument">
+              <stringProp name="Argument.name">graphiteHost</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="graphitePort" elementType="Argument">
+              <stringProp name="Argument.name">graphitePort</stringProp>
+              <stringProp name="Argument.value">2003</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="rootMetricsPrefix" elementType="Argument">
+              <stringProp name="Argument.name">rootMetricsPrefix</stringProp>
+              <stringProp name="Argument.value">jmeter.</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="summaryOnly" elementType="Argument">
+              <stringProp name="Argument.name">summaryOnly</stringProp>
+              <stringProp name="Argument.value">true</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="samplersList" elementType="Argument">
+              <stringProp name="Argument.name">samplersList</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="percentiles" elementType="Argument">
+              <stringProp name="Argument.name">percentiles</stringProp>
+              <stringProp name="Argument.value">90;95;99</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </elementProp>
+        <stringProp name="classname">org.apache.jmeter.visualizers.backend.graphite.GraphiteBackendListenerClient</stringProp>
+      </BackendListener>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
